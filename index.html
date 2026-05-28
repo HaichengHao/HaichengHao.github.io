@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>HaiChengHao | 全栈开发者</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== 现代化全局样式 + 移动端优化 ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap');
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --bg-gradient: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --contrib-light: #9be9a8;     /* GitHub light green */
+      --contrib-medium: #40c463;   /* medium */
+      --contrib-dark: #30a14e;     /* dark */
+      --contrib-darker: #216e39;   /* darkest */
+      --contrib-empty: #ebedf0;    /* background cell */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.03) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== 导航栏 ===== */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+      margin-bottom: 1.5rem;
+    }
+
+    nav h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    /* ===== 个人资料区 ===== */
+    .profile-section {
+      text-align: center;
+      margin-bottom: 2.8rem;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: var(--shadow);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .profile-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.2rem;
+    }
+
+    .profile-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .profile-bio {
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== 贡献日历区 ===== */
+    .contributions-section {
+      margin-bottom: 3rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: var(--shadow);
+      padding: 1.8rem;
+    }
+
+    .contrib-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .contrib-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .contrib-year-selector {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contrib-year-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .contrib-year-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .contrib-year-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .contrib-calendar {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .week-labels {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 112px;
+      margin-right: 8px;
+      color: #656d76;
+      font-size: 10px;
+      padding-top: 12px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(53, 1fr);
+      gap: 4px;
+      min-width: fit-content;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .contrib-cell {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      background-color: var(--contrib-empty);
+      transition: transform 0.2s, opacity 0.2s;
+      cursor: default;
+    }
+
+    .contrib-cell:hover {
+      transform: scale(1.4);
+      z-index: 1;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+      position: relative;
+    }
+
+    .contrib-cell[data-count="0"] { background-color: var(--contrib-empty); }
+    .contrib-cell[data-count="1"] { background-color: var(--contrib-light); }
+    .contrib-cell[data-count="2"] { background-color: var(--contrib-medium); }
+    .contrib-cell[data-count="3"] { background-color: var(--contrib-dark); }
+    .contrib-cell[data-count="4"] { background-color: var(--contrib-darker); }
+
+    .contrib-legend {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .legend-color.light { background-color: var(--contrib-light); }
+    .legend-color.medium { background-color: var(--contrib-medium); }
+    .legend-color.dark { background-color: var(--contrib-dark); }
+    .legend-color.darker { background-color: var(--contrib-darker); }
+    .legend-color.empty { background-color: var(--contrib-empty); }
+
+    /* 移动端返回按钮 */
+    #back-btn-mobile {
+      display: none;
+      position: fixed;
+      bottom: env(safe-area-inset-bottom, 20px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      width: 85%;
+      max-width: 400px;
+      padding: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    #back-btn-mobile:hover {
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    /* 桌面端返回按钮 */
+    #back-btn-desktop {
+      display: inline-flex;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #back-btn-desktop:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px -10px rgba(99, 102, 241, 0.3);
+    }
+
+    /* ===== 首页标题 ===== */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--text-primary), #475569);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== 项目网格 ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.8rem;
+      perspective: 1000px;
+    }
+
+    @media (min-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 1.75rem;
+      transition: var(--transition);
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      will-change: transform;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px) rotateX(1.5deg);
+      box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.12);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card .icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: white;
+      font-size: 1.3rem;
+    }
+
+    .project-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: var(--text-primary);
+    }
+
+    .project-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: clamp(0.9rem, 3.2vw, 1rem);
+    }
+
+    /* ===== 详情页 ===== */
+    .project-detail {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 2.2rem 1.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: var(--shadow);
+      margin-bottom: 80px;
+    }
+
+    .project-detail h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 6vw, 2.3rem);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .project-detail .description {
+      font-size: clamp(1rem, 3.8vw, 1.1rem);
+      line-height: 1.75;
+      margin-bottom: 1.8rem;
+      color: var(--text-primary);
+    }
+
+    .project-detail .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin: 1.8rem 0;
+    }
+
+    .project-detail .tech-tag {
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--primary-dark);
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      font-weight: 600;
+    }
+
+    .project-detail .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.75rem 1.6rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: clamp(1rem, 3.5vw, 1.05rem);
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      width: fit-content;
+    }
+
+    .project-detail .github-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===== 响应式断点 ===== */
+    @media (min-width: 769px) {
+      #back-btn-mobile {
+        display: none !important;
+      }
+      
+      .project-detail {
+        margin-bottom: 0;
+        padding: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #back-btn-desktop {
+        display: none !important;
+      }
+      
+      .container {
+        padding: 1.2rem;
+      }
+      
+      .profile-section {
+        padding: 1.2rem;
+      }
+      
+      .profile-avatar {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .contributions-section {
+        padding: 1.2rem;
+      }
+      
+      .contrib-cell {
+        width: 12px;
+        height: 12px;
+      }
+      
+      .week-labels {
+        height: 96px;
+        font-size: 8px;
+        padding-top: 8px;
+      }
+      
+      .calendar-grid {
+        gap: 2px;
+      }
+    }
+
+    @supports (padding-top: env(safe-area-inset-top)) {
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航栏、个人资料区等保持不变 -->
+    <nav>
+      <h1>个人页</h1>
+      <a id="back-btn-desktop" href="#">
+        <i class="fas fa-arrow-left"></i> 返回首页
+      </a>
+    </nav>
+
+    <section class="profile-section">
+      <img id="profile-avatar" src="" alt="Profile" class="profile-avatar">
+      <h2 id="profile-name" class="profile-name"></h2>
+      <p id="profile-bio" class="profile-bio"></p>
+    </section>
+
+    <!-- 贡献日历区 -->
+    <section class="contributions-section">
+      <div class="contrib-header">
+        <h2 class="contrib-title">GitHub 贡献记录</h2>
+        <div class="contrib-year-selector" id="year-selector"></div>
+      </div>
+      <div class="contrib-calendar">
+        <div class="week-labels">
+          <span>周日</span>
+          <span>周一</span>
+          <span>周二</span>
+          <span>周三</span>
+          <span>周四</span>
+          <span>周五</span>
+          <span>周六</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+      <div class="contrib-legend">
+        <div class="legend-item"><div class="legend-color empty"></div><span>无提交</span></div>
+        <div class="legend-item"><div class="legend-color light"></div><span>1–2 次</span></div>
+        <div class="legend-item"><div class="legend-color medium"></div><span>3–4 次</span></div>
+        <div class="legend-item"><div class="legend-color dark"></div><span>5–9 次</span></div>
+        <div class="legend-item"><div class="legend-color darker"></div><span>10+ 次</span></div>
+      </div>
+    </section>
+
+    <main id="home-view">
+      <section class="hero">
+        <h2>精选项目</h2>
+        <p>探索我精心打造的开源项目，每个都凝聚了对技术的热情与匠心。</p>
+      </section>
+      <div class="projects-grid" id="projects-container"></div>
+    </main>
+
+    <main id="detail-view" style="display:none;">
+      <div class="project-detail" id="detail-content"></div>
+    </main>
+  </div>
+
+  <button id="back-btn-mobile"><i class="fas fa-arrow-left"></i> 返回首页</button>
+
+  <script>
+    // ===== 配置信息（无敏感数据）=====
+    const GITHUB_USERNAME = "HaichengHao";
+    const profile = {
+      name: "HaichengHao",
+      avatar: "https://github.com/HaichengHao.png", 
+      bio: "Python全栈开发, Web开发, LangChain, LangGraph, DeepAgent深度使用开发者"
+    };
+
+    const projects = [
+      {
+        id: 'EcommerceG',
+        name: 'EcommerceG',
+        description: '基于知识图谱的智能客服',
+        details: '本项目旨在构建电商领域知识图谱，并基于该知识图谱搭建智能电商客服系统，利用Bert实现命名实体识别任务,从商品描述信息提取标签,从Mysql数据表中提取数据并利用Neo4j构建图数据库,利用BAAI-bge做嵌入结合Neo4jVector实现基于知识图谱混合相似度搜索,利用提示词实现Text_to_Cypher,将用户输入信息转换为Cypher语句并使用实体对齐保证从Neo4j中得到真实数据并利用Langchain+LLM总结结果并返回给客户,基于FastAPI与Web界面实现友好的交互页面并用AutoDL云服务器部署真正实现从开发到部署全流程。',
+        githubUrl: 'https://github.com/HaichengHao/EcommerceG',
+        tech: ['LangChain','Docker','Text2Cypher','MySQL' ,'GraphRAG','Neo4J','NER' ,'Python','WebUI前端' ,'FastAPI']
+      },
+      {
+        id: 'SkinHealthButler',
+        name: 'SkinHealthButler',
+        description: '个人皮肤健康管家',
+        details: '本项目利用Kaggle公开常见皮肤病数据集训练分类模型并结合LLaMA-Factory微调Qwen3-0.6B模型，利用与大模型对话蒸馏的皮肤病问答对使Qwen3-0.6B掌握常见皮肤病病因，病情表现，以及治疗手段，结合CV+NLP，形成基于皮肤病图片进行分类判别的皮肤病健康管家，实现多轮对话记忆不丢失以及友好的web界面',
+        githubUrl: 'https://github.com/HaichengHao/SkinHealthButler',
+        tech: ['LangChain', 'DeepAgents' ,'COT','SKILL', '模型微调','LLaMA-Factory','Docker','RedisStackServer','Transformer']
+      },
+      {
+        id: 'SMARTLAWYER',
+        name: 'SMARTLAWYER',
+        description: '你的个人律师',
+        details: '基于RAG+Langchain+PGVector构建的可以进行RAG多轮对话的个人法律助手,可以通过上传想了解的法律文件进行对话问答，并利用RedisStackServer实现多轮带记忆会话',
+        githubUrl: 'https://github.com/HaichengHao/SMARTLAWYER',
+        tech: ['RAG', 'LangGraph','PGVector(向量数据库)', 'PostgreSQL','RedisStackServer']
+      }
+    ];
+
+    // DOM 元素
+    const homeView = document.getElementById('home-view');
+    const detailView = document.getElementById('detail-view');
+    const projectsContainer = document.getElementById('projects-container');
+    const detailContent = document.getElementById('detail-content');
+    const backBtnDesktop = document.getElementById('back-btn-desktop');
+    const backBtnMobile = document.getElementById('back-btn-mobile');
+    const yearSelector = document.getElementById('year-selector');
+    const calendarGrid = document.getElementById('calendar-grid');
+
+    // 渲染个人资料
+    document.getElementById('profile-avatar').src = profile.avatar;
+    document.getElementById('profile-name').textContent = profile.name;
+    document.getElementById('profile-bio').textContent = profile.bio;
+
+    let currentContributions = [];
+
+    function getContributionLevel(count) {
+      if (count === 0) return 0;
+      if (count <= 2) return 1;
+      if (count <= 4) return 2;
+      if (count <= 9) return 3;
+      return 4;
+    }
+
+    function renderYearButtons(years, activeYear, onYearClick) {
+      yearSelector.innerHTML = '';
+      years.forEach(year => {
+        const btn = document.createElement('button');
+        btn.className = `contrib-year-btn ${year === activeYear ? 'active' : ''}`;
+        btn.textContent = year;
+        btn.addEventListener('click', () => {
+          yearSelector.querySelectorAll('.contrib-year-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          onYearClick(year);
+        });
+        yearSelector.appendChild(btn);
+      });
+    }
+
+    function renderCalendarForYear(contributions, year) {
+      const contribMap = new Map();
+      contributions.forEach(c => {
+        const dateObj = new Date(c.date);
+        if (dateObj.getFullYear() === year) {
+          contribMap.set(c.date, c.count);
+        }
+      });
+      
+      const startDate = new Date(year, 0, 1);
+      const endDate = new Date(year, 11, 31);
+      
+      let firstSunday = new Date(startDate);
+      while (firstSunday.getDay() !== 0) {
+        firstSunday.setDate(firstSunday.getDate() - 1);
+      }
+      
+      calendarGrid.innerHTML = '';
+      
+      for (let week = 0; week < 53; week++) {
+        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+          const currentDate = new Date(firstSunday);
+          currentDate.setDate(firstSunday.getDate() + week * 7 + dayOfWeek);
+          
+          const isInRange = currentDate >= startDate && currentDate <= endDate;
+          let count = 0;
+          if (isInRange) {
+            const dateStr = currentDate.toISOString().split('T')[0];
+            count = contribMap.get(dateStr) || 0;
+          }
+          
+          const level = getContributionLevel(count);
+          const cell = document.createElement('div');
+          cell.className = 'contrib-cell';
+          cell.setAttribute('data-count', level);
+          if (isInRange) {
+            cell.title = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()} : ${count} 次贡献`;
+          }
+          calendarGrid.appendChild(cell);
+        }
+      }
+    }
+
+    // 从本地 JSON 文件加载数据（无需 Token）
+    async function loadContributions() {
+      try {
+        // 显示加载状态
+        calendarGrid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:2rem;">
+            <i class="fas fa-spinner fa-pulse" style="font-size:1.5rem;"></i>
+            <p>加载贡献数据中...</p>
+          </div>
+        `;
+        
+        const response = await fetch('contributions-data.json?v=' + Date.now());
+        if (!response.ok) throw new Error('数据文件不存在');
+        
+        const contributions = await response.json();
+        currentContributions = contributions;
+        
+        const targetYears = [2026, 2025, 2024, 2023, 2022];
+        const defaultYear = 2026;
+        
+        renderYearButtons(targetYears, defaultYear, (selectedYear) => {
+          renderCalendarForYear(currentContributions, selectedYear);
+        });
+        
+        renderCalendarForYear(currentContributions, defaultYear);
+        console.log('✅ 贡献数据加载成功');
+      } catch (err) {
+        console.error("❌ 加载贡献数据失败:", err);
+        calendarGrid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:1.5rem;">
+            <i class="fas fa-cloud-download-alt" style="font-size:1.8rem; color:#6366f1;"></i>
+            <p style="margin-top:0.8rem;">贡献数据加载中</p>
+            <p style="font-size:0.85rem; color:#64748b;">首次访问请稍候，数据正在同步...</p>
+            <button onclick="location.reload()" style="margin-top:1rem; padding:0.5rem 1rem; background:#6366f1; color:white; border:none; border-radius:8px; cursor:pointer;">重新加载</button>
+          </div>
+        `;
+      }
+    }
+
+    function renderProjects() {
+      projectsContainer.innerHTML = '';
+      projects.forEach(proj => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.innerHTML = `
+          <div class="icon"><i class="fab fa-github"></i></div>
+          <h3>${proj.name}</h3>
+          <p>${proj.description}</p>
+        `;
+        card.addEventListener('click', () => showDetail(proj.id));
+        projectsContainer.appendChild(card);
+      });
+    }
+
+    function showDetail(projectId) {
+      const proj = projects.find(p => p.id === projectId);
+      if (!proj) return;
+      
+      detailContent.innerHTML = `
+        <h2>${proj.name}</h2>
+        <div class="description">${proj.details}</div>
+        <div class="tech-tags">
+          ${proj.tech.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+        </div>
+        <a class="github-link" href="${proj.githubUrl}" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i> 查看 GitHub 仓库
+        </a>
+      `;
+      
+      homeView.style.display = 'none';
+      detailView.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.location.hash = projectId;
+    }
+
+    function goHome() {
+      homeView.style.display = 'block';
+      detailView.style.display = 'none';
+      window.location.hash = '';
+    }
+
+    function handleHashChange() {
+      const hash = window.location.hash.substring(1);
+      if (hash && projects.some(p => p.id === hash)) {
+        showDetail(hash);
+      } else {
+        goHome();
+      }
+    }
+
+    [backBtnDesktop, backBtnMobile].forEach(btn => {
+      btn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        goHome();
+      });
+    });
+
+    window.addEventListener('hashchange', handleHashChange);
+    renderProjects();
+    handleHashChange();
+    loadContributions();
+  </script>
+</body>
+</html>

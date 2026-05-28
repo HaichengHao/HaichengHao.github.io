@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>HaiChengHao | 全栈开发者</title>
+  <!-- 在 index.html 的 <head> 中添加 -->
+  <link rel="icon" type="image/png" href="https://github.com/HaichengHao.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* ===== 现代化全局样式 + 移动端优化 ===== */
@@ -612,7 +614,7 @@
       {
         id: 'EcommerceG',
         name: 'EcommerceG',
-        description: '基于知识图谱的智能客服',
+        description: '基于知识图谱的智能客服系统',
         details: '本项目旨在构建电商领域知识图谱，并基于该知识图谱搭建智能电商客服系统，利用Bert实现命名实体识别任务,从商品描述信息提取标签,从Mysql数据表中提取数据并利用Neo4j构建图数据库,利用BAAI-bge做嵌入结合Neo4jVector实现基于知识图谱混合相似度搜索,利用提示词实现Text_to_Cypher,将用户输入信息转换为Cypher语句并使用实体对齐保证从Neo4j中得到真实数据并利用Langchain+LLM总结结果并返回给客户,基于FastAPI与Web界面实现友好的交互页面并用AutoDL云服务器部署真正实现从开发到部署全流程。',
         githubUrl: 'https://github.com/HaichengHao/EcommerceG',
         tech: ['LangChain','Docker','Text2Cypher','MySQL' ,'GraphRAG','Neo4J','NER' ,'Python','WebUI前端' ,'FastAPI']
@@ -620,7 +622,7 @@
       {
         id: 'SkinHealthButler',
         name: 'SkinHealthButler',
-        description: '个人皮肤健康管家',
+        description: '个人皮肤健康管家系统',
         details: '本项目利用Kaggle公开常见皮肤病数据集训练分类模型并结合LLaMA-Factory微调Qwen3-0.6B模型，利用与大模型对话蒸馏的皮肤病问答对使Qwen3-0.6B掌握常见皮肤病病因，病情表现，以及治疗手段，结合CV+NLP，形成基于皮肤病图片进行分类判别的皮肤病健康管家，实现多轮对话记忆不丢失以及友好的web界面',
         githubUrl: 'https://github.com/HaichengHao/SkinHealthButler',
         tech: ['LangChain', 'DeepAgents' ,'COT','SKILL', '模型微调','LLaMA-Factory','Docker','RedisStackServer','Transformer']
@@ -628,10 +630,26 @@
       {
         id: 'SMARTLAWYER',
         name: 'SMARTLAWYER',
-        description: '你的个人律师',
+        description: '个人律师系统',
         details: '基于RAG+Langchain+PGVector构建的可以进行RAG多轮对话的个人法律助手,可以通过上传想了解的法律文件进行对话问答，并利用RedisStackServer实现多轮带记忆会话',
         githubUrl: 'https://github.com/HaichengHao/SMARTLAWYER',
-        tech: ['RAG', 'LangGraph','PGVector(向量数据库)', 'PostgreSQL','RedisStackServer']
+        tech: ['RAG', 'LangGraph','PGVector(向量数据库)', 'MillVus','PostgreSQL','RedisStackServer']
+      },
+      {
+        id: 'RAGHelper',
+        name: 'RAGHelper',
+        description: '个人RAG助手系统',
+        details: '本项目旨在复现如CherryStudio文件读取作向量数据库并进行RAG对话的功能，使用PGVector结合LangGraph, 构建可以识别文件类型，并自主决定如何读取并写入文件到向量数据库的Agent,结合LangGraph实现可控的图编排，并利用Gradio构建Web平台，实现上传，解析，构建向量数据库，使用RedisStackServer+LLM实现RAG多轮对话功能。',
+        githubUrl: 'https://github.com/HaichengHao/RAGHelper',
+        tech: ['ChromaDB(向量数据库)','RAG', 'LangGraph','Gradio','RedisStackServer']
+      },
+      {
+        id: 'IDOL46',
+        name: 'IDOL46',
+        description: '虚拟偶像聊天系统',
+        details: '本系统旨在构建一个基于大语言模型（LLM）与检索增强生成（RAG）技术的智能虚拟偶像，专注于日本偶像团体“乃木坂 46”（Nogizaka46）的数字人聊天系统。',
+        githubUrl: 'https://github.com/HaichengHao/RAGHelper',
+        tech: ['ChromaDB(向量数据库)','RAG', 'LangChain','SKILL','Gradio','RedisStackServer']
       }
     ];
 
